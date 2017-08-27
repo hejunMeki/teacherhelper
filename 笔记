@@ -1,0 +1,39 @@
+time：2017-05-16 项目开始第一天
+问题：为什么第一次访问session中的该属性时空的？？？
+带参的方法怎样通过jstl返回结果？？
+ Collections.reverse（）静态方法实现list集合元素反转
+ <c:if test="tindex.index==0" var="firsttime">
+           		<option value="${currentTime}"  selected>${currentTime}</option>
+           		</c:if>
+           		<c:if test="tindex.index>0" var="nexttime">
+           		 <option value="0"  onclick="list-1.jsp?ctime=${currentTime}">${currentTime}</option>
+           		</c:if>
+           		
+           		
+
+<c:if test="${teacher==null}">
+	<%
+	response.sendRedirect("login.jsp");%>
+</c:if>
+
+<%
+		if(request.getSession().getAttribute("teacher")==null)
+			response.sendRedirect("login.jsp");
+%>
+<c:set var="time" value="param.selecttime"/>
+<c:set var="deftime" value="param.ctt"/>
+<c:if test="${deftime==null}">
+           			<c:if test="${time==currentTime}">
+           					<option value="${currentTime}"  selected="selected">${currentTime}</option>
+           			</c:if>
+           			<c:if test="${time!=currentTime}">
+           					<option value="${currentTime}" >${currentTime}</option>
+           			</c:if>
+           		</c:if>
+<c:if test="${time!=null&&time==currentTime}">
+           					<option value="${currentTime}"  selected="selected">${currentTime}</option>
+           			</c:if>
+           			<c:if test="${time==null}">
+           					<option value="${currentTime}" >${currentTime}</option>
+           			</c:if>
+
