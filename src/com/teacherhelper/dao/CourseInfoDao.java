@@ -15,6 +15,7 @@ import com.teacherhelper.javabean.GdesignBean;
 
 /*
  * 教师的课程信息数据库操作
+ * ###没有归类好
  */
 public class CourseInfoDao {
 	private Connection conn;

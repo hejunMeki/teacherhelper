@@ -7,9 +7,6 @@
 </c:if>
 <!-- 获取当前查询的学期时间 -->
 <c:set var="tm" value="${requestScope.ctTime}" scope="page"/>
-<!-- 先不做总学时计算<c:set var="allTimes" value="0.0"/> -->
-<c:set var="allTimes"  value="${0.0}"/>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,6 +19,15 @@
 <link rel="stylesheet" href="css/admin.css">
 <script src="js/jquery.js"></script>
 <script src="js/pintuer.js"></script>
+<script type="text/javascript">
+//导出到excel
+function exportClick(){	
+		var tm=document.getElementById("ddd");
+		var index=tm.selectedIndex;
+		var time=tm.options[index].value;
+		window.location.href='excelServlet?ctt='+time;
+}
+</script>
 </head>
 <body>
 <form method="post" action="showClasses" id="listform">
@@ -31,7 +37,7 @@
       <ul class="search" style="padding-left:10px;">   
         <li>时间区间搜索
 			<!--  -->
-        <select name="s_ishome" class="input" onchange="window.location.href='showClasses?ctt='+this.options[this.selectedIndex].value;"   style="width:200px; line-height:17px; display:inline-block">
+        <select id="ddd" name="s_ishome" class="input" onchange="window.location.href='showClasses?ctt='+this.options[this.selectedIndex].value;"   style="width:200px; line-height:17px; display:inline-block">
            <c:forEach var="currentTime" items="${sessionScope.time}" varStatus="tindex">
            			<c:if test="${currentTime==tm}">
            					<option value="${currentTime}"  selected>${currentTime}</option>
@@ -50,7 +56,7 @@
           </select>
     
         </li>
-        <li> <a class="button border-main icon-edit" href="add.html"> 导出Excel</a> </li>
+        <li> <a class="button border-main icon-edit" href="javascript:void(0);" onclick="exportClick()"> 导出Excel</a> </li>
       </ul>
     </div> 
    
@@ -73,6 +79,8 @@
      
       </tr>
 	<c:forEach var="ClsBean"  items="${requestScope.classes}">
+	<!-- 计算总学时 -->
+	<c:set var="addTime" value="${addTime+ClsBean.testTimes+ClsBean.classTimes}"/>
 				<tr>
           <td style="text-align:left; padding-left:20px;">${ClsBean.cName}</td>
           <td> ${ClsBean.pRadio}</td>
@@ -86,11 +94,12 @@
            <c:if test="${tm=='all'}">
         		<td>${ClsBean.terms}</td>
         </c:if>
-        <!-- 暂不做计算总共学时   ${allTimes=allTimes+ClsBean.testTimes+ClsBean.classTimes}-->
       </tr>
-      <c:set var="allTimes" value="${allTimes+ClsBean.testTimes+ClsBean.classTimes}"></c:set>
+      
+      
 	</c:forEach>
-	<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span>总学时：<c:out value="${allTimes}"/></span></td></tr>	
+	
+	<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>	
  		<tr>
         <th width="150" style="text-align:left; padding-left:20px;">课程名称</th>
         <th>周数N</th>
@@ -103,6 +112,7 @@
  		 </tr>
  		 
 		<c:forEach var="CDesignBean"  items="${requestScope.cDesigns}">
+		<c:set var="addTime" value="${addTime+CDesignBean.times}"/>
 				<tr>
           <td style="text-align:left; padding-left:20px;">${CDesignBean.cName}</td>
           <td> ${CDesignBean.weeks}</td>
@@ -115,7 +125,7 @@
         <!-- 暂不做计算总共学时   ${allTimes=allTimes+ClsBean.testTimes+ClsBean.classTimes}-->
       </tr>
 	</c:forEach>
- 	<tr><td></td><td></td><td><td></td><td></td><td></td><td></td><td></td><td><span>总学时：</span></td></tr> 		
+ 	<tr><td></td><td></td><td><td></td><td></td><td></td><td></td><td></td><td></td></tr> 		
  		
  	
  		<tr>
@@ -132,11 +142,13 @@
  		
  		
  		<c:forEach var="GDesignBean"  items="${requestScope.gDesigns}">
+ 		<c:set var="addTime" value="${addTime+GDesignBean.times}"/>
 				<tr>
+				<td></td>
           <td style="text-align:left; padding-left:20px;">${GDesignBean.pId}</td>
           <td> ${GDesignBean.stuNum}</td>
            <td>${GDesignBean.weeks}</td>
-           <td></td><td></td><td></td><td></td><td></td>
+           <td></td><td></td><td></td><td></td>
           <td>${GDesignBean.times}</td>
            <c:if test="${tm=='all'}">
         		<td>${GDesignBean.term}</td>
@@ -145,15 +157,15 @@
       	</tr>
 	</c:forEach>
 	
- 		<tr><td></td><td></td><td></td><td><td></td><td></td><td></td><td></td><td><span>总学时：</span></tr>
+ 		<tr><td></td><td></td><td></td><td><td></td><td></td><td></td><td></td><td></td></tr>
  		<tr>
  				
  		</tr>
  		<tr>
  				<td></td><td></td><td></td><td></td>
  			<!-- 先不计算 -->
- 				<td>全部学时</td>
- 				<td></td><td></td><td></td>
+ 				<td><span>总教时：<c:out value="${addTime}"/></span></td>
+ 				<td></td><td></td><td></td><td></td>
  		</tr>
      </table>
   </div>

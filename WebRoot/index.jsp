@@ -36,7 +36,7 @@
     <li><a href="list-1.jsp?ctt=${ctime}" target="right"><span class="icon-caret-right"></span>讲课学时</a></li>
     <li><a href="list-4.jsp?ctt=${ctime}" target="right"><span class="icon-caret-right"></span>课设实习</a></li>
     <li><a href="showClasses?ctt=${ctime}" target="right"><span class="icon-caret-right"></span>毕业设计</a></li>  
-    
+    <li><a href="CdesignServlet" target="right"><span class="icon-caret-right"></span>课程设计分配</a></li> 
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>其他设置</h2>
   <ul>

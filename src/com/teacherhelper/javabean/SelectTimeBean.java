@@ -38,13 +38,13 @@ public class SelectTimeBean {
 		 int year=calendar.get(Calendar.YEAR);
 		 int month=calendar.get(Calendar.MONTH);
 		 String str;
-		 if(month>7)
+		 if(month>=7)
 		 {
-			 str=(year-1)+"-"+year+"/"+2;
+			 str=year+"-"+(year+1)+"/"+1;
 		 }
 		 else
 		 {
-			 str=(year-1)+"-"+year+"/"+1;
+			 str=(year-1)+"-"+year+"/"+2;
 		 }
 		 return str;
     }
@@ -65,20 +65,20 @@ public class SelectTimeBean {
 		 String time;
 		 for(int i=2016;i<year;i++)
 		 {
-			 time=(i-1)+"-"+i+"/"+1;
-			 list.add(time);
 			 time=(i-1)+"-"+i+"/"+2;
 			 list.add(time);
-		 }
-		 if(month>7)
-		 {
-			 time=(year-1)+"-"+year+"/"+1;
+			 time=(i)+"-"+(i+1)+"/"+1;
 			 list.add(time);
+		 }
+		 if(month>=7)
+		 {
 			 time=(year-1)+"-"+year+"/"+2;
 			 list.add(time);
+			 time=(year)+"-"+(year+1)+"/"+1;
+			 list.add(time);		 
 		 }	
 		 else{
-			 time=(year-1)+"-"+year+"/"+1;
+			 time=(year-1)+"-"+year+"/"+2;
 			 list.add(time);
 		 }
 		 Collections.reverse(list);    //将集合反转
@@ -87,7 +87,7 @@ public class SelectTimeBean {
 	/*
 	 * 测试该方法  成功
 	 */
-  //  public static void main(String[] args) {
+//    public static void main(String[] args) {
 //		List list=new SelectTimeBean().getSelectTimes();
 //		for(int i=0;i<list.size();i++)
 //		{
